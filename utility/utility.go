@@ -136,7 +136,6 @@ func InArrayFloat64(haystack []float64, needle float64) bool {
 // GetExtension はファイル名から拡張子を取得（ドットは含まない）
 func GetExtension(filename string) (string, error) {
 
-	// 拒否ファイルリストのみの定義なので、オリジナルファイルの拡張子を取得するしかない。
 	parts := strings.Split(filename, ".")
 
 	if len(parts) <= 1 {
