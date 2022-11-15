@@ -122,8 +122,8 @@ func InArrayInt64(haystack []int64, needle int64) bool {
 	return false
 }
 
-// InArrayFloat はhaystackにneedleが存在するかチェック
-func InArrayFloat(haystack []float64, needle float64) bool {
+// InArrayFloat64 はhaystackにneedleが存在するかチェック
+func InArrayFloat64(haystack []float64, needle float64) bool {
 	for _, h := range haystack {
 		if h == needle {
 			return true
