@@ -8,11 +8,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// ErrorResponse はエラー時のレスポンス型
+type ErrorResponse struct {
+	Message string `json:"message"`
+}
+
 // Error はエラー発生時の汎用レスポンス
 func Error(c *gin.Context, status int, message string) {
-	c.JSON(status, gin.H{
-		"message": message,
-	})
+
+	var res ErrorResponse
+	res.Message = message
+
+	c.JSON(status, res)
 }
 
 // BadRequest ステータスのレスポンス
