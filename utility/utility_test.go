@@ -1,6 +1,7 @@
 package utility
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 )
@@ -16,9 +17,11 @@ func TestCreateUUID(t *testing.T) {
 
 func TestSplitWord(t *testing.T) {
 
-	str := "ワード1 ワード2  ワード3　　　 　  ワード4"
+	str := "ワード1 ワード2  ワード3　　　ワード４ABC"
 
 	res := SplitWord(str)
+
+	fmt.Println(res)
 
 	if len(res) != 4 {
 		t.Fatalf("length is not valid %d", len(res))
