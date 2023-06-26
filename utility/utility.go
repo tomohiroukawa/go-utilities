@@ -3,14 +3,13 @@ package utility
 import (
 	"crypto/sha256"
 	"fmt"
+	"github.com/ktnyt/go-moji"
 	"log"
 	"os"
 	"strings"
 	"syscall"
 
 	"golang.org/x/crypto/bcrypt"
-
-	"golang.org/x/text/width"
 
 	"github.com/google/uuid"
 )
@@ -30,8 +29,8 @@ func CreateUUID() uuid.UUID {
 // SplitWord は全角、半角問わずスペース区切りの文字列をスペースで分割してスライスを返す
 func SplitWord(str string) []string {
 
-	// 漢字・ひらがな・カタカナを全角に、英数字を半角に統一してスペースで分割
-	words := strings.Split(width.Fold.String(str), " ")
+	// 全角スペースを半角スペースに変換して半角スペースでsplit
+	words := strings.Split(moji.Convert(str, moji.ZS, moji.HS), " ")
 
 	var res []string
 
