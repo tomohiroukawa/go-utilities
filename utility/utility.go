@@ -2,6 +2,7 @@ package utility
 
 import (
 	"crypto/sha256"
+	"errors"
 	"fmt"
 	"github.com/ktnyt/go-moji"
 	"log"
@@ -77,52 +78,8 @@ func GenerateToken() string {
 	return fmt.Sprintf("%x", b)
 }
 
-// InArrayString はhaystackにneedleが存在するかチェック
-func InArrayString(haystack []string, needle string) bool {
-	for _, h := range haystack {
-		if h == needle {
-			return true
-		}
-	}
-
-	return false
-}
-
-// InArrayInt はhaystackにneedleが存在するかチェック
-func InArrayInt(haystack []int, needle int) bool {
-	for _, h := range haystack {
-		if h == needle {
-			return true
-		}
-	}
-
-	return false
-}
-
-// InArrayInt32 はhaystackにneedleが存在するかチェック
-func InArrayInt32(haystack []int32, needle int32) bool {
-	for _, h := range haystack {
-		if h == needle {
-			return true
-		}
-	}
-
-	return false
-}
-
-// InArrayInt64 はhaystackにneedleが存在するかチェック
-func InArrayInt64(haystack []int64, needle int64) bool {
-	for _, h := range haystack {
-		if h == needle {
-			return true
-		}
-	}
-
-	return false
-}
-
-// InArrayFloat64 はhaystackにneedleが存在するかチェック
-func InArrayFloat64(haystack []float64, needle float64) bool {
+// InArray は配列存在チェックを、ジェネリクスで実装したもの
+func InArray[T comparable](haystack []T, needle T) bool {
 	for _, h := range haystack {
 		if h == needle {
 			return true
@@ -150,7 +107,8 @@ func GetExtension(filename string) (string, error) {
 func FileExists(filename string) bool {
 	_, err := os.Stat(filename)
 
-	if pathError, ok := err.(*os.PathError); ok {
+	var pathError *os.PathError
+	if errors.As(err, &pathError) {
 		if pathError.Err == syscall.ENOTDIR {
 			return false
 		}
@@ -163,7 +121,8 @@ func FileExists(filename string) bool {
 	return true
 }
 
-// PtrString はstringをポインターに変更(aws.String()的な)
-func PtrString(str string) *string {
-	return &str
+// ToPtr は引数のアドレスを返す
+// ジェネリクスで汎用化
+func ToPtr[T comparable](x T) *T {
+	return &x
 }
