@@ -139,6 +139,9 @@ func TestInArray(t *testing.T) {
 	if !InArray([]string{"A", "B"}, "B") {
 		t.Fatalf("result should be true")
 	}
+	if InArray([]string{"A", "B"}, "C") {
+		t.Fatalf("result should be false")
+	}
 	if !InArray([]int64{123, 456}, 123) {
 		t.Fatalf("result should be true")
 	}
