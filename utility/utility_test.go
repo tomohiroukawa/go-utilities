@@ -2,7 +2,6 @@ package utility
 
 import (
 	"fmt"
-	"reflect"
 	"testing"
 )
 
@@ -60,91 +59,6 @@ func TestGenerateToken(t *testing.T) {
 	}
 }
 
-func TestInArrayString(t *testing.T) {
-
-	arr := []string{"test1", "test2", "test3", "日本語"}
-
-	if InArrayString(arr, "ない") {
-		t.Fatalf("result shoud be false")
-	}
-
-	if !InArrayString(arr, "test2") {
-		t.Fatalf("result shoud be true")
-	}
-
-	if !InArrayString(arr, "日本語") {
-		t.Fatalf("result shoud be true")
-	}
-}
-
-func TestInArrayInt(t *testing.T) {
-
-	arr := []int{1, 2, 3, 4, 5, 0}
-
-	if InArrayInt(arr, 6) {
-		t.Fatalf("result shoud be false")
-	}
-
-	if !InArrayInt(arr, 1) {
-		t.Fatalf("result shoud be true")
-	}
-
-	if !InArrayInt(arr, 0) {
-		t.Fatalf("result shoud be true")
-	}
-}
-
-func TestInArrayInt32(t *testing.T) {
-
-	arr := []int32{1874623, 298355872, 3875367, 489764597, 57857863, 947262}
-
-	if InArrayInt32(arr, 8747862) {
-		t.Fatalf("result shoud be false")
-	}
-
-	if !InArrayInt32(arr, 1874623) {
-		t.Fatalf("result shoud be true")
-	}
-
-	if !InArrayInt32(arr, 489764597) {
-		t.Fatalf("result shoud be true")
-	}
-}
-
-func TestInArrayInt64(t *testing.T) {
-
-	arr := []int64{18756362672776, 275635352542, 387578278287, 47895978627938, 5578783782, 868934223445353}
-
-	if InArrayInt64(arr, 557478928783782) {
-		t.Fatalf("result shoud be false")
-	}
-
-	if !InArrayInt64(arr, 387578278287) {
-		t.Fatalf("result shoud be true")
-	}
-
-	if !InArrayInt64(arr, 868934223445353) {
-		t.Fatalf("result shoud be true")
-	}
-}
-
-func TestInArrayFloat64(t *testing.T) {
-
-	arr := []float64{1.020292893, 2.3875632, 3.3856271, 4123.3756352, 545.4873627462, 36.383726}
-
-	if InArrayFloat64(arr, 64.28278) {
-		t.Fatalf("result shoud be false")
-	}
-
-	if !InArrayFloat64(arr, 2.3875632) {
-		t.Fatalf("result shoud be true")
-	}
-
-	if !InArrayFloat64(arr, 545.4873627462) {
-		t.Fatalf("result shoud be true")
-	}
-}
-
 func TestGetExtension(t *testing.T) {
 
 	ext, err := GetExtension("/path/to/test.JPEG")
@@ -196,15 +110,39 @@ func TestFileExists(t *testing.T) {
 	}
 }
 
-func TestPtrString(t *testing.T) {
+func TestPtr(t *testing.T) {
 
-	str := "not pointer"
+	v := 1
+	r := ToPtr(v)
 
-	res := PtrString(str)
+	if fmt.Sprintf("%T", r) != "*int" {
+		t.Fatalf("result should be *int")
+	}
 
-	typeOf := reflect.TypeOf(res)
+	v2 := 1.90472
+	r2 := ToPtr(v2)
 
-	if typeOf.String() != "*string" {
+	if fmt.Sprintf("%T", r2) != "*float64" {
+		t.Fatalf("result should be *float64")
+	}
+
+	v3 := "hoge hoge"
+	r3 := ToPtr(v3)
+
+	if fmt.Sprintf("%T", r3) != "*string" {
 		t.Fatalf("result should be *string")
+	}
+
+}
+
+func TestInArray(t *testing.T) {
+	if !InArray([]string{"A", "B"}, "B") {
+		t.Fatalf("result should be true")
+	}
+	if !InArray([]int64{123, 456}, 123) {
+		t.Fatalf("result should be true")
+	}
+	if !InArray([]float64{12.3342, 7128.35325, 456.432}, 7128.35325) {
+		t.Fatalf("result should be true")
 	}
 }
