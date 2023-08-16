@@ -2,13 +2,12 @@ package utility
 
 import (
 	"crypto/sha256"
-	"errors"
 	"fmt"
-	"github.com/ktnyt/go-moji"
 	"log"
 	"os"
 	"strings"
-	"syscall"
+
+	"github.com/ktnyt/go-moji"
 
 	"golang.org/x/crypto/bcrypt"
 
@@ -106,13 +105,6 @@ func GetExtension(filename string) (string, error) {
 // FileExists はファイルの存在チェック
 func FileExists(filename string) bool {
 	_, err := os.Stat(filename)
-
-	var pathError *os.PathError
-	if errors.As(err, &pathError) {
-		if pathError.Err == syscall.ENOTDIR {
-			return false
-		}
-	}
 
 	if os.IsNotExist(err) {
 		return false
