@@ -19,8 +19,11 @@ type ResizeRequest struct {
 // Resize はリサイズしてファイルを指定のパスに保存
 func Resize(req *ResizeRequest) error {
 
+	// スマホの画像などに対応
+	opts := imaging.AutoOrientation(true)
+
 	// 画像を開く
-	imgSrc, err := imaging.Open(req.OriginalPath)
+	imgSrc, err := imaging.Open(req.OriginalPath, opts)
 
 	if err != nil {
 		return err
@@ -56,8 +59,11 @@ type CropRectRequest struct {
 // CropRect はリサイズしてファイルを正方形にトリミング
 func CropRect(req *CropRectRequest) error {
 
+	// スマホの画像などに対応
+	opts := imaging.AutoOrientation(true)
+
 	// 画像を開く
-	imgSrc, err := imaging.Open(req.OriginalPath)
+	imgSrc, err := imaging.Open(req.OriginalPath, opts)
 
 	if err != nil {
 		return err
