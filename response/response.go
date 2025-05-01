@@ -8,15 +8,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ErrorResponse はエラー時のレスポンス型
-type ErrorResponse struct {
+// CommonResponse はエラー時のレスポンス型
+type CommonResponse struct {
 	Message string `json:"message"`
 }
 
 // Error はエラー発生時の汎用レスポンス
 func Error(c *gin.Context, status int, message string) {
 
-	var res ErrorResponse
+	var res CommonResponse
 	res.Message = message
 
 	c.JSON(status, res)
